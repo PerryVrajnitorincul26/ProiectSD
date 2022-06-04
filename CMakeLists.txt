@@ -20,7 +20,7 @@ set(PROJECT_SOURCES
         mainwindow.cpp
         mainwindow.h
         mainwindow.ui
-)
+        ImToQuadTree.cpp ImToQuadTree.h)
 include_directories( ${OpenCV_INCLUDE_DIRS} )
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(ImComp
