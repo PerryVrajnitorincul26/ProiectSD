@@ -8,7 +8,7 @@
 enum nodeType:char {
     root, branch, leaf
 };
-/***
+/*!
  *
  * @tparam dataType self explanatory container
  * @warning UNTESTED CODE
