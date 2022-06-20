@@ -16,10 +16,10 @@ enum nodeType:char {
  */
 template<typename dataType>
 class TreeNode {
-    dataType content;
 public:
     nodeType type;
     std::array<TreeNode *,4> children;
+    dataType content;
     TreeNode();
     explicit TreeNode(dataType, nodeType type = leaf);//Avoid being called implicitly
     ~TreeNode();

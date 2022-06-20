@@ -12,9 +12,10 @@
 template<typename dataType>///I'd suggest using something like cv::Vec3b
 class ImToQuadTree {
     ImToQuadTree();
+
 public:
     ImToQuadTree(cv::Mat);
-
+    cv::Mat getPixMap();
 };
 
 

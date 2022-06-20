@@ -8,6 +8,7 @@
 #include <opencv2/imgproc.hpp>
 #include <iostream>
 
+
 using namespace cv;
 
 int main(int argc, char *argv[])
@@ -26,6 +27,7 @@ int main(int argc, char *argv[])
         std::cout << "Could not read the image: " << image_path << std::endl;
         return 1;
     }
+
     w.show();
     return a.exec();
 }

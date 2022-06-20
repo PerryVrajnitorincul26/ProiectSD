@@ -17,10 +17,9 @@ find_package(OpenCV REQUIRED)
 
 set(PROJECT_SOURCES
         main.cpp
-        UI/mainwindow.cpp
-        UI/mainwindow.h
-        UI/mainwindow.ui
-        Logic/ImToQuadTree.cpp Logic/ImToQuadTree.h Logic/TreeNode.cpp Logic/TreeNode.h)
+        UI/mainwindow.cpp UI/mainwindow.h UI/mainwindow.ui
+        Logic/ImToQuadTree.cpp Logic/ImToQuadTree.h
+        Logic/TreeNode.cpp Logic/TreeNode.h)
 include_directories(${OpenCV_INCLUDE_DIRS})
 if (${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(ImComp
