@@ -5,9 +5,19 @@
 #include <qdebug.h>
 #ifndef IMCOMP_TREENODE_H
 #define IMCOMP_TREENODE_H
+
+
 enum nodeType:char {
     root, branch, leaf
 };
+enum nodeDirection:char{
+    Nw, Sw, Se, Ne, C
+
+};
+enum nodeRight :char{
+    N, S, W, E
+};
+
 /*!
  *
  * @tparam dataType self explanatory container
@@ -18,13 +28,25 @@ template<typename dataType>
 class TreeNode {
 public:
     nodeType type;
+
     std::array<TreeNode *,4> children;
+    nodeDirection direction;
+    TreeNode*Parent;
     dataType content;
+
     TreeNode();
-    explicit TreeNode(dataType, nodeType type = leaf);//Avoid being called implicitly
+    explicit TreeNode(dataType, nodeType type = leaf);
+     explicit TreeNode(dataType,nodeDirection direction=C);//Avoid being called implicitly
     ~TreeNode();
+    TreeNode* GSN(nodeRight);
+    bool CorectDirection(nodeRight);
+    nodeDirection OpositeDirection();
+    TreeNode*CompareNode(TreeNode*);
+
     void eatChildren();
     dataType avgChildren();
+    TreeNode* DirectionChild(nodeDirection);
+
 };
 
 
