@@ -9,6 +9,7 @@
 #include <opencv2/imgcodecs.hpp>
 #include <vector>
 #include <queue>
+
 #ifndef IMCOMP_IMTOQUADTREE_H
 #define IMCOMP_IMTOQUADTREE_H
 
@@ -17,15 +18,22 @@ class ImToQuadTree {
     cv::Mat iMat;
     int maxHeight;
     TreeNode<dataType> *root;
-    TreeNode<dataType>*generate( std::pair<int,int>nw,std::pair<int,int>se, TreeNode<dataType> *parent);
+
+    void generate(std::pair<int, int> nw, std::pair<int, int> se, TreeNode<dataType> *cNode);
 
 public:
 
     ImToQuadTree();
+
     ImToQuadTree(cv::Mat);
+
     ImToQuadTree(std::string filepath);
-    std::vector<std::pair<int,int>> CompareQuadtrees(ImToQuadTree<dataType>*);
+
+    std::vector<std::pair<int, int>> CompareQuadtrees(ImToQuadTree<dataType> *);
+
     cv::Mat getPixMap();
+
+    void sanityCheck();
 
 };
 

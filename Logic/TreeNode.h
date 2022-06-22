@@ -2,19 +2,21 @@
 // Created by perry on 6/4/22.
 //
 #include <array>
+#include <opencv2/core.hpp>
 #include <qdebug.h>
+
 #ifndef IMCOMP_TREENODE_H
 #define IMCOMP_TREENODE_H
 
 
-enum nodeType:char {
+enum nodeType : char {
     root, branch, leaf
 };
-enum nodeDirection:char{
+enum nodeDirection : char {
     Nw, Sw, Se, Ne, C
 
 };
-enum nodeRight :char{
+enum nodeRight : char {
     N, S, W, E
 };
 
@@ -29,26 +31,33 @@ class TreeNode {
 public:
     nodeType type;
 
-    std::array<TreeNode *,4> children;
+    std::array<TreeNode *, 4> children;
     nodeDirection direction;
-    TreeNode*Parent;
+    TreeNode *parent;
     dataType content;
 
-    TreeNode();
-    explicit TreeNode(dataType, nodeType type = leaf);
-     explicit TreeNode(dataType,nodeDirection direction=C);//Avoid being called implicitly
-    ~TreeNode();
-    TreeNode* GSN(nodeRight);
-    bool CorectDirection(nodeRight);
-    nodeDirection OpositeDirection();
-    TreeNode*CompareNode(TreeNode*);
+    TreeNode(nodeType = leaf,TreeNode * = nullptr);
 
-    void eatChildren();
+    explicit TreeNode(dataType, nodeType type = leaf);
+
+    explicit TreeNode(dataType, nodeDirection direction = C);//Avoid being called implicitly
+    ~TreeNode();
+
+    TreeNode *GSN(nodeRight);
+
+    bool CorectDirection(nodeRight);
+
+    nodeDirection OpositeDirection();
+
+    TreeNode *CompareNode(TreeNode *);
+
+    void delChildren();
+
     dataType avgChildren();
-    TreeNode* DirectionChild(nodeDirection);
+
+    TreeNode *DirectionChild(nodeDirection);
 
 };
-
 
 
 #endif //IMCOMP_TREENODE_H
