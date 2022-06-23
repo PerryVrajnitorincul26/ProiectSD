@@ -7,10 +7,6 @@
 #include <cmath>
 
 
-inline int intlog(double base, double x) {
-    return (int) ceil(log(x) / log(base));
-}
-
 template<typename dataType>
 ImToQuadTree<dataType>::ImToQuadTree() {
     maxHeight = 0;
@@ -19,14 +15,15 @@ ImToQuadTree<dataType>::ImToQuadTree() {
 
 template<typename dataType>
 ImToQuadTree<dataType>::ImToQuadTree(cv::Mat Img):ImToQuadTree() {
-    maxHeight = intlog(4, Img.total());
+    //maxHeight = intlog(4, Img.total());
     iMat = Img;
 };
 
 template<typename dataType>
 ImToQuadTree<dataType>::ImToQuadTree(std::string filepath):ImToQuadTree() {
     iMat = cv::imread(filepath, cv::IMREAD_COLOR);
-    maxHeight = intlog(4, iMat.total());
+    auto mSize = std::max(iMat.rows, iMat.cols);
+    maxHeight = ceil(log(mSize));
     //Required to use nodeType::root because I didn't realise I was shadowing its value when I created this class :)
     root = new TreeNode<cv::Vec3b>(nodeType::root, nullptr);
     int size = 1 << maxHeight; // equivalent to 2^maxHeight
@@ -107,6 +104,14 @@ ImToQuadTree<dataType>::getDiff(ImToQuadTree<dataType> *T1, unsigned long long t
     std::vector<std::pair<cv::Point, cv::Point>> difValues;
     auto N1 = this->root;
     auto N2 = T1->root;
+
+    int heightDif = this->maxHeight - T1->maxHeight;
+    while (heightDif > 0 && N1->type != leaf) {
+        N1 = N1->children[0];
+    }
+    while (heightDif < 0 && N2->type != leaf) {
+        N2 = N2->children[0];
+    }
     std::queue<TreeNode<dataType> *> Line1;
     std::queue<TreeNode<dataType> *> Line2;
     Line1.push(N1);

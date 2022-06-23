@@ -30,8 +30,6 @@ public:
 
     std::vector<std::pair<cv::Point, cv::Point>> getDiff(ImToQuadTree<dataType> *, unsigned long long threshold);
 
-    cv::Mat getPixMap();
-
     void sanityCheck();
 
 };
