@@ -35,10 +35,16 @@ public:
     nodeDirection direction;
     TreeNode *parent;
     dataType content;
+    cv::Point nw, se;
 
-    TreeNode(nodeType = leaf,TreeNode * = nullptr);
+    unsigned long long cDif{};
 
-    explicit TreeNode(dataType, nodeType type = leaf);
+    /*!
+     * Intentionally declared as implicit constructor
+     */
+    TreeNode(nodeType = leaf, TreeNode * = nullptr);
+
+    explicit TreeNode(dataType, cv::Point= {0, 0}, cv::Point= {0, 0}, nodeType type = leaf, TreeNode *parent = nullptr);
 
     explicit TreeNode(dataType, nodeDirection direction = C);//Avoid being called implicitly
     ~TreeNode();
@@ -53,7 +59,7 @@ public:
 
     void delChildren();
 
-    dataType avgChildren();
+    void propagateProp();
 
     TreeNode *DirectionChild(nodeDirection);
 

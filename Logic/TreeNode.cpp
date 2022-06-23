@@ -1,30 +1,40 @@
 //
 // Created by perry on 6/4/22.
 //
-//TODO: Write tests for all this shit, or at least make sure this actually works
 #include "TreeNode.h"
 #include <QList>
 
 template<typename dataType>
-TreeNode<dataType>::TreeNode(nodeType type, TreeNode * parent) {
+/*!
+ *  This is also the implicit constructor, watch out this creates leafs by default
+ * @tparam dataType can only be cv::Vec3b as of right now
+ * @param type set to leaf By default
+ * @param parent parent of node to be inserted
+ */
+TreeNode<dataType>::TreeNode(nodeType type, TreeNode *parent) {
     content = dataType();
     for (auto &iter: children) {
         iter = nullptr;
     }
+    this->cDif = 0;
     this->parent = parent;
     this->type = type;
 }
 
 template<typename dataType>
-TreeNode<dataType>::TreeNode(dataType content, nodeType type) {
-    content = dataType();
-    for (auto &iter: children) {
-        iter = nullptr;
-    }
-    this->type = type;
+TreeNode<dataType>::TreeNode(dataType content, cv::Point upperLeft, cv::Point lowerRight, nodeType type,
+                             TreeNode *parent):TreeNode(type, parent) {
     this->content = content;
+    nw = upperLeft;
+    se = lowerRight;
 }
 
+/*!
+ *
+ * @tparam dataType
+ * @param content
+ * @param type
+ */
 template<typename dataType>
 TreeNode<dataType>::~TreeNode() {
     if (this->type != leaf) {
@@ -34,13 +44,29 @@ TreeNode<dataType>::~TreeNode() {
     }
 }
 
+/*!
+ *
+ */
 template<typename dataType>
-dataType TreeNode<dataType>::avgChildren() {
-    dataType tempValue = dataType();
-    for (auto &iter: children) {
-        tempValue += iter->content;
+void TreeNode<dataType>::propagateProp() {
+    cv::Vec3i avg{0, 0, 0};
+    if (this->type != leaf) {
+        for (const auto &it: this->children) {
+            avg += it->content;
+        }
+        avg /= 4;
+        this->content = (cv::Vec3i) avg;
+        ///Propagate average
+        for (const auto &it: this->children) {
+
+            auto temp = avg - cv::Vec3i(it->content);
+            this->cDif += it->cDif;
+            this->cDif += abs(temp[0]);
+            this->cDif += abs(temp[1]);
+            this->cDif += abs(temp[2]);
+        }
+
     }
-    return tempValue / 4;
 }
 
 template<typename dataType>
@@ -153,6 +179,7 @@ TreeNode<dataType> *TreeNode<dataType>::CompareNode(TreeNode<dataType> *Pixel) {
     }
     return nullptr;
 }
+
 
 //Instantiaion is required otherwise linker will not be able to acess it.
 template
