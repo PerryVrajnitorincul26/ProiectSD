@@ -73,6 +73,7 @@ template<typename dataType>
 void TreeNode<dataType>::delChildren() {
     for (auto &iter: children) {
         delete iter;
+        iter = nullptr;
     }
 }
 

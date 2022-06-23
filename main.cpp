@@ -28,8 +28,9 @@ int main(int argc, char *argv[])
     //    return 1;
     //}
     //imshow("salut",img);
-    auto *temp = new ImToQuadTree<Vec3b>(image_path);
-    temp->sanityCheck();
+    auto *temp1 = new ImToQuadTree<Vec3b>("ycheck.bmp");
+    auto *temp2 = new ImToQuadTree<Vec3b>("check.bmp");
+    auto rez = temp1->getDiff(temp2,0);
     w.show();
     return a.exec();
 }

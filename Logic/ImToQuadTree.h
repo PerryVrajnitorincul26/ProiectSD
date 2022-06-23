@@ -18,8 +18,7 @@ class ImToQuadTree {
     cv::Mat iMat;
     int maxHeight;
     TreeNode<dataType> *root;
-
-    void generate(std::pair<int, int> nw, std::pair<int, int> se, TreeNode<dataType> *cNode);
+    void generate(cv::Point nw, cv::Point se, TreeNode<dataType> *cNode);
 
 public:
 
@@ -29,7 +28,7 @@ public:
 
     ImToQuadTree(std::string filepath);
 
-    std::vector<std::pair<int, int>> CompareQuadtrees(ImToQuadTree<dataType> *);
+    std::vector<std::pair<cv::Point, cv::Point>> getDiff(ImToQuadTree<dataType> *, unsigned long long threshold);
 
     cv::Mat getPixMap();
 

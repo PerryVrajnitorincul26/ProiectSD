@@ -36,8 +36,18 @@ public:
     TreeNode *parent;
     dataType content;
     cv::Point nw, se;
-
-    unsigned long long cDif{};
+    inline unsigned long long colorDistance(TreeNode <dataType> * rhs) {
+        unsigned long long total = this->cDif;
+        total+=rhs->cDif;
+        auto temp1 = (cv::Vec3i) this->content;
+        auto temp2 = (cv::Vec3i) rhs->content;
+        temp1 -= temp2;
+        for (int i = 0; i < 3; i++) {
+            total += abs(temp1[i]);
+        }
+        return total;
+    }
+    unsigned long long cDif;
 
     /*!
      * Intentionally declared as implicit constructor
