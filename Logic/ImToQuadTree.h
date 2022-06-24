@@ -13,18 +13,18 @@
 #ifndef IMCOMP_IMTOQUADTREE_H
 #define IMCOMP_IMTOQUADTREE_H
 
-template<typename dataType>///I'd suggest using something like cv::Vec3b
+template<typename dataType>
 class ImToQuadTree {
     cv::Mat iMat;
     int maxHeight;
     TreeNode<dataType> *root;
     void generate(cv::Point nw, cv::Point se, TreeNode<dataType> *cNode);
 
-public:
-    void showDifVect(std::vector<std::pair<cv::Point, cv::Point>>);
     ImToQuadTree();
 
-    ImToQuadTree(cv::Mat);
+public:
+    void showDifVect(std::vector<std::pair<cv::Point, cv::Point>>);
+
 
     ImToQuadTree(std::string filepath);
 

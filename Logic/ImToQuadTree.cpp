@@ -14,11 +14,6 @@ ImToQuadTree<dataType>::ImToQuadTree() {
 }
 
 template<typename dataType>
-ImToQuadTree<dataType>::ImToQuadTree(cv::Mat Img):ImToQuadTree() {
-    iMat = Img;
-};
-
-template<typename dataType>
 ImToQuadTree<dataType>::ImToQuadTree(std::string filepath):ImToQuadTree() {
     iMat = cv::imread(filepath, cv::IMREAD_COLOR);
     auto mSize = std::max(iMat.rows, iMat.cols);
