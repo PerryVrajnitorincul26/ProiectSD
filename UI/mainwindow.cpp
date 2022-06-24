@@ -2,6 +2,7 @@
 #include "./ui_mainwindow.h"
 #include <QDebug>
 #include <QAbstractItemView>
+#include <ctime>
 /*!
  * Another prime example of the "Hey man if it works approach" to software engineering
  * This constructor does so much because i would've had to reimplement way to many functions if i had promoted ui objects to their own types
@@ -96,20 +97,8 @@ void MainWindow::on_removeSelected_clicked() {
 
 
 void MainWindow::on_compareSelection_clicked() {
-    for(int i=0;i<lastSelection->size();i++)
-    {
-        for(int j=i;j<lastSelection->size();j++)
-        {
-            auto hash = (*lastSelection)[i] + (*lastSelection)[j];
-            auto first = knownImages[(*lastSelection)[i]];
-            auto second = knownImages[(*lastSelection)[j]];
-            knownDiffs.insert(hash,first->getDiff(second,0));
-        }
-    }
-    *difKeyList = knownDiffs.keys();
-    qDebug()<<knownDiffs.keys();
+    qDebug()<<*difKeyList;
 
-    difKeyModel->setStringList(*difKeyList);
 }
 
 
@@ -117,11 +106,15 @@ void MainWindow::on_createComparison_clicked()
 {
     for(int i=0;i<lastSelection->size()-1;i++)
     {
-        for(int j=i;j<lastSelection->size();j++)
+        for(int j=i+1;j<lastSelection->size();j++)
         {
             auto hash = (*lastSelection)[i] +"|" + (*lastSelection)[j];
             auto first = knownImages[(*lastSelection)[i]];
             auto second = knownImages[(*lastSelection)[j]];
+            clock_t time = clock();
+            auto di = first->getDiff(second,0);
+            time -=clock();
+            qDebug()<<"Generating differences for "<<hash<<"took: " <<abs(float(time)/CLOCKS_PER_SEC);
             knownDiffs.insert(hash,first->getDiff(second,0));
             auto temp= knownDiffs[hash];
             first->showDifVect(temp);
@@ -130,7 +123,6 @@ void MainWindow::on_createComparison_clicked()
     *difKeyList = knownDiffs.keys();
     qDebug()<<knownDiffs.keys();
 
-    qDebug()<<"i am not insane";
     difKeyModel->setStringList(*difKeyList);
 }
 

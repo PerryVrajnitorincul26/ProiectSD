@@ -5,7 +5,7 @@
 #include "ImToQuadTree.h"
 #include <opencv2/opencv.hpp>
 #include <cmath>
-
+#include <ctime>
 /*!
  * Rather useless default constructor
  * @TODO: make this function private
@@ -33,7 +33,12 @@ ImToQuadTree<dataType>::ImToQuadTree(std::string filepath):ImToQuadTree() {
     root = new TreeNode<cv::Vec3b>(nodeType::root, nullptr);
     int size = 1 << maxHeight; // equivalent to 2^maxHeight
     size--;//Since images start at 0,0 they must end at maxsize-1
+    clock_t time = clock();
     generate({0, 0}, {size, size}, root);
+    time-=clock();
+    auto temp = QString::fromStdString(filepath);
+    qDebug()<<"("<<iMat.rows<<"x"<<iMat.cols<<") "<<temp<<"took :"<<abs((float)time/CLOCKS_PER_SEC);
+
 }
 
 /*!
@@ -159,8 +164,9 @@ ImToQuadTree<dataType>::getDiff(ImToQuadTree<dataType> *T1, unsigned long long t
                 }
             } else if (f2->type == leaf && f1->type == leaf) {
                 difValues.push_back({f1->nw, f1->se});
-                ///@warning possible bug here if f1-type is root, i'm assuming no image would be a block of identical pixels however
-            } else if (f1->type == leaf) {
+                ///@warning possible bug here if f1-type is root, i'm assuming no image would be a block of identical pixels howe
+            } else if (f1->type == leaf)
+{
                 std::queue<TreeNode<dataType> *> unEq;
                 unEq.push(f2);
                 while (!unEq.empty()) {
