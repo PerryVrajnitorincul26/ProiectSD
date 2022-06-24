@@ -1,8 +1,8 @@
 # ImageComparisonAlgorithm
 
-##All mentioned Images are located in the resource folder alongside the program output.
+## All mentioned Images are located in the resource folder alongside the program output.
 Profiling results:
-####QuadTree generation 
+#### QuadTree generation 
 ( 1080 x 1920 )  "/home/perry/Pictures/Screenshots/Screenshot from 2022-06-24 18-15-41.png" took : 0.914197
 
 ( 1080 x 1920 )  "/home/perry/Pictures/Screenshots/Screenshot from 2022-06-24 18-15-20.png" took : 0.922926
@@ -15,7 +15,7 @@ Profiling results:
 
 ( 302 x 342 )  "/home/perry/test/Screenshot from 2022-06-05 18-44-06.png" took : 0.056017
 
-####Differences
+#### Differences
 (340x290)Generating differences for  "/home/perry/test/mods.png|/home/perry/test/Screenshot from 2022-06-05 18-44-06.png" took:  0.006629
 
 (1920x1080)Generating differences for  "/home/perry/Pictures/Screenshots/Screenshot from 2022-06-24 18-15-41.png|/home/perry/Pictures/Screenshots/Screenshot from 2022-06-24 18-15-20.png" took:  0.124315
