@@ -1,2 +1,2 @@
-# ProiectSD
+# ImageComparisonAlgorithm
 We must find a way to compare images in a efficient and easy manner without consuming too many memory resources and to accesses the differences by grouping together the identical pixels. The main purpose of this Project is to use the concept of Quad-Trees in order to find the differences by dividing the image into Quadrants, finding the groups of identical pixels grouping them together and comparing larger chunks,  the algorithm does this process in a swifter way. 
