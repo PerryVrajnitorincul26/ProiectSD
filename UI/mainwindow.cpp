@@ -2,7 +2,12 @@
 #include "./ui_mainwindow.h"
 #include <QDebug>
 #include <QAbstractItemView>
-
+/*!
+ * Another prime example of the "Hey man if it works approach" to software engineering
+ * This constructor does so much because i would've had to reimplement way to many functions if i had promoted ui objects to their own types
+ * Mostly initializes Ui related attributes
+ * @param parent
+ */
 MainWindow::MainWindow(QWidget *parent)
         : QMainWindow(parent), ui(new Ui::MainWindow) {
 
@@ -104,7 +109,6 @@ void MainWindow::on_compareSelection_clicked() {
     *difKeyList = knownDiffs.keys();
     qDebug()<<knownDiffs.keys();
 
-    qDebug()<<"i am not insane";
     difKeyModel->setStringList(*difKeyList);
 }
 
@@ -118,7 +122,6 @@ void MainWindow::on_createComparison_clicked()
             auto hash = (*lastSelection)[i] +"|" + (*lastSelection)[j];
             auto first = knownImages[(*lastSelection)[i]];
             auto second = knownImages[(*lastSelection)[j]];
-            auto t=first->getDiff(second,0);
             knownDiffs.insert(hash,first->getDiff(second,0));
             auto temp= knownDiffs[hash];
             first->showDifVect(temp);

@@ -13,6 +13,11 @@
 #ifndef IMCOMP_IMTOQUADTREE_H
 #define IMCOMP_IMTOQUADTREE_H
 
+/*!
+ *
+ *  Class that handles generating quadTrees from images , as of right now only passed as filepaths
+ * @tparam dataType Can only be cv::Vec3b if any other types are needed they must be declared somewhere that has access to ImToQuadTree before compilation
+ */
 template<typename dataType>
 class ImToQuadTree {
     cv::Mat iMat;

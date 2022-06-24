@@ -17,7 +17,6 @@ find_package(OpenCV REQUIRED)
 
 set(PROJECT_SOURCES
         main.cpp
-        interface.h interface.cpp
         UI/mainwindow.cpp UI/mainwindow.h UI/mainwindow.ui
         Logic/ImToQuadTree.cpp Logic/ImToQuadTree.h
         Logic/TreeNode.cpp Logic/TreeNode.h)
@@ -53,7 +52,7 @@ set_target_properties(ImComp PROPERTIES
         MACOSX_BUNDLE TRUE
         WIN32_EXECUTABLE TRUE
         )
-
+#comment
 if (QT_VERSION_MAJOR EQUAL 6)
     qt_finalize_executable(ImComp)
 endif ()

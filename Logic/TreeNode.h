@@ -8,7 +8,9 @@
 #ifndef IMCOMP_TREENODE_H
 #define IMCOMP_TREENODE_H
 
-
+/*!
+ * Used only in TreeNode MIGHT be able to be declared inside it but changing that would require a ton of effort at this point
+ */
 enum nodeType : char {
     root, branch, leaf
 };
@@ -21,10 +23,8 @@ enum nodeRight : char {
 };
 
 /*!
- *
- * @tparam dataType self explanatory container
- * @warning UNTESTED CODE
- * @todo test this lmao
+ * Class used for representing nodes inside our quadtree structure
+ * @tparam dataType Can only be cv::Vec3b despide being a deplated function as it is split into a header and implementation.
  */
 template<typename dataType>
 class TreeNode {

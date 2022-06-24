@@ -6,6 +6,11 @@
 #include <opencv2/opencv.hpp>
 #include <cmath>
 
+/*!
+ * Rather useless default constructor
+ * @TODO: make this function private
+ * @tparam dataType
+ */
 
 template<typename dataType>
 ImToQuadTree<dataType>::ImToQuadTree() {
@@ -13,6 +18,12 @@ ImToQuadTree<dataType>::ImToQuadTree() {
     root = nullptr;
 }
 
+/*!
+ * Only constructor used within the actual program
+ * This calls generate with 0,0 and {$p,$p} arguments where $p is ceil(log2(std::max(width,height))) of the image
+ * @tparam dataType
+ * @param filepath valid filepath in std::string format
+ */
 template<typename dataType>
 ImToQuadTree<dataType>::ImToQuadTree(std::string filepath):ImToQuadTree() {
     iMat = cv::imread(filepath, cv::IMREAD_COLOR);
@@ -25,14 +36,32 @@ ImToQuadTree<dataType>::ImToQuadTree(std::string filepath):ImToQuadTree() {
     generate({0, 0}, {size, size}, root);
 }
 
+/*!
+ * @warning this functions REQUIRES that the are of between nw and se be a power of 4 god only knows what would happen otherwise
+ * Thankfully the only accessible constructor of this class already handles that for you
+ * One of only two functions where the complexity of this project actually lies, that should tell you a thing or too about
+ * how much we take pride in the quality of out code :)
+ * @warning this function is recursive , however it shouldn't theoretically be more then log2(edge) calls deep at any given time
+ * @tparam dataType
+ * @param nw TopLeft most point of the image
+ * @param se BottomRight most point of the image
+ * @param cNode current node during the initialization process, should be root when this function is called
+ *
+ * This works by first creating the structure of a QuadTree until nodes can represent pixels
+ * After that it deletes useless nodes (all children have the exact same value) while propagating properties such as
+ * avarage colour which is stored in content in any non leaf node , and cDiff which stores the total "colour difference"
+ * of child nodes to the average parent colour
+ */
 template<typename dataType>
 void ImToQuadTree<dataType>::generate(cv::Point nw, cv::Point se, TreeNode<dataType> *cNode) {
     cv::Point A2{0, 0};
     cv::Point A1{0, 0};
+    ///Half the length of the current edge
     int diff = (se.x - nw.x + 1) / 2;
+    ///diff will only be 0
     if (diff >= 1) {
-        cNode->nw=nw;
-        cNode->se=se;
+        cNode->nw = nw;
+        cNode->se = se;
         for (auto &i: cNode->children) {
             i = new TreeNode<dataType>({0, 0, 0}, nw, se, branch, cNode);
         }
@@ -87,12 +116,17 @@ void ImToQuadTree<dataType>::generate(cv::Point nw, cv::Point se, TreeNode<dataT
         else
             cNode->content = cv::Vec3b(0, 0, 0);
     }
-    if (cNode->cDif)
-        qDebug() << "At:" << nw.x << "|" << nw.y << " " << se.x << "|" << se.y << "  "
-                 << cNode->content[0] << cNode->content[1] << cNode->content[2] << (se.y - nw.y + 1);
+    //if (cNode->cDif)
+    //    qDebug() << "At:" << nw.x << "|" << nw.y << " " << se.x << "|" << se.y << "  "
+    //             << cNode->content[0] << cNode->content[1] << cNode->content[2] << (se.y - nw.y + 1);
 }
-
-
+/*!
+ * The other do everything function in our program
+ * @param T1 pointer to Tree this is supposed to be compared to
+ * @param threshold value against which we check colour difference , can therefore be used , as the name would suggest, for more "fuzzy" comparison. Quite useful for JPG images.
+ * @return Vector of "squares" which represent differences in the two trees
+ * Based on level order traversal, only deviates from this approach when one of the nodes has children
+ */
 template<typename dataType>
 std::vector<std::pair<cv::Point, cv::Point>>
 ImToQuadTree<dataType>::getDiff(ImToQuadTree<dataType> *T1, unsigned long long threshold) {
@@ -153,7 +187,6 @@ ImToQuadTree<dataType>::getDiff(ImToQuadTree<dataType> *T1, unsigned long long t
                         difValues.push_back({unEq.front()->nw, unEq.front()->se});
                     }
                     unEq.pop();
-                    ///Undefined behaviour when unEq is empty, however relDif WILL be overwritten by the time it is used again
                     if (!unEq.empty())
                         auto relDif = f2->colorDistance(unEq.front());
                 }
@@ -167,19 +200,25 @@ ImToQuadTree<dataType>::getDiff(ImToQuadTree<dataType> *T1, unsigned long long t
 }
 
 
+/*! Very usefull function to make sure you are in fat not going insane
+ * Does nothing beyond print something that won't even show up in stderr unless you've enabled it in some arcane config file
+ */
 template<typename dataType>
 void ImToQuadTree<dataType>::sanityCheck() {
     qDebug() << "sanity restored";
 }
-
+/*!
+ * Simple function ment to open a CV window containing line rectangles overlaid over one of the source images.
+ * @tparam dataType
+ * @param vect vector of "squares" Honestly I could've used a single point here instead of a pair.
+ */
 template<typename dataType>
 void ImToQuadTree<dataType>::showDifVect(std::vector<std::pair<cv::Point, cv::Point>> vect) {
     cv::Mat temp(iMat);
-    for(const auto &coords : vect)
-    {
-        cv::rectangle(temp,coords.second,coords.first,{255,0,0});
+    for (const auto &coords: vect) {
+        cv::rectangle(temp, coords.second, coords.first, {255, 0, 0});
     }
-    cv::imshow(":)",temp);
+    cv::imshow(":)", temp);
 };
 
 //Instantiation is required otherwise linker will not be able to access it.

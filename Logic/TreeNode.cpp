@@ -21,6 +21,15 @@ TreeNode<dataType>::TreeNode(nodeType type, TreeNode *parent) {
     this->type = type;
 }
 
+/*!
+ *  Also assigns a value to nw, se and content
+ * @tparam dataType can only be cv::Vec3b as of right now
+ * @param content
+ * @param upperLeft Point representing upper left corner of the area this node represents
+ * @param lowerRight Point representing upper left corner of the area this node represents
+ * @param type Either leaf, branch or root
+ * @param parent Pointer to previous node in Tree, should be null when type = root
+ */
 template<typename dataType>
 TreeNode<dataType>::TreeNode(dataType content, cv::Point upperLeft, cv::Point lowerRight, nodeType type,
                              TreeNode *parent):TreeNode(type, parent) {
@@ -30,7 +39,7 @@ TreeNode<dataType>::TreeNode(dataType content, cv::Point upperLeft, cv::Point lo
 }
 
 /*!
- *
+ * Simple deconstructor should hopefully work
  * @tparam dataType
  * @param content
  * @param type
@@ -45,7 +54,10 @@ TreeNode<dataType>::~TreeNode() {
 }
 
 /*!
- *
+ * Function that sets this nodes content equal to the average of it's children and avarage colour difference (cdif) to
+ * the total of it's children + the difference between the colours of it's children and itself
+ * The purpose of cDif is to enable a more "fuzzy match" match as that may be required when dealing with JPEG images
+ * @tparam dataType
  */
 template<typename dataType>
 void TreeNode<dataType>::propagateProp() {
@@ -69,6 +81,11 @@ void TreeNode<dataType>::propagateProp() {
     }
 }
 
+/*!
+ * Simple function used to safely remove child nodes
+ * also used in Generation
+ * @tparam dataType
+ */
 template<typename dataType>
 void TreeNode<dataType>::delChildren() {
     for (auto &iter: children) {
@@ -182,6 +199,10 @@ TreeNode<dataType> *TreeNode<dataType>::CompareNode(TreeNode<dataType> *Pixel) {
 }
 
 
-//Instantiaion is required otherwise linker will not be able to acess it.
+/*!
+ *   Instantiation is required here, otherwise class will not actually be compiled
+ *   This is sadly a probably unwanted result of how templates and separate compilation work in c++ :(
+ *   An alternative could've been to declare everything in the header.
+ */
 template
 class TreeNode<cv::Vec3b>;
