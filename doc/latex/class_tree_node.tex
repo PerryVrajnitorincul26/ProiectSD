@@ -1,0 +1,179 @@
+\hypertarget{class_tree_node}{}\doxysection{Tree\+Node$<$ data\+Type $>$ Class Template Reference}
+\label{class_tree_node}\index{TreeNode$<$ dataType $>$@{TreeNode$<$ dataType $>$}}
+
+
+{\ttfamily \#include $<$Tree\+Node.\+h$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_tree_node_a9177f2f782be0c9b22ef5f70e4a30552}\label{class_tree_node_a9177f2f782be0c9b22ef5f70e4a30552}} 
+unsigned long long {\bfseries color\+Distance} (\mbox{\hyperlink{class_tree_node}{Tree\+Node}}$<$ data\+Type $>$ $\ast$rhs)
+\item 
+\mbox{\hyperlink{class_tree_node_a6d7506627b3241533a65676a82a49433}{Tree\+Node}} (node\+Type=leaf, \mbox{\hyperlink{class_tree_node}{Tree\+Node}} $\ast$=nullptr)
+\item 
+\mbox{\hyperlink{class_tree_node_a706c077d21559fbc35cd3054f46a0aeb}{Tree\+Node}} (data\+Type, cv\+::\+Point=\{0, 0\}, cv\+::\+Point=\{0, 0\}, node\+Type type=leaf, \mbox{\hyperlink{class_tree_node}{Tree\+Node}} $\ast$parent=nullptr)
+\item 
+\mbox{\Hypertarget{class_tree_node_a46242e497b3a83a38b190bff11d92bb0}\label{class_tree_node_a46242e497b3a83a38b190bff11d92bb0}} 
+{\bfseries Tree\+Node} (data\+Type, node\+Direction direction=C)
+\item 
+\mbox{\hyperlink{class_tree_node_a0599f9040e51b396244b2665a4c05ffd}{$\sim$\+Tree\+Node}} ()
+\item 
+\mbox{\Hypertarget{class_tree_node_a7d54d2bdf6b841392312ff485a036707}\label{class_tree_node_a7d54d2bdf6b841392312ff485a036707}} 
+\mbox{\hyperlink{class_tree_node}{Tree\+Node}} $\ast$ {\bfseries GSN} (node\+Right)
+\item 
+\mbox{\Hypertarget{class_tree_node_aaf8cace3d856c349c62bb38e049548e4}\label{class_tree_node_aaf8cace3d856c349c62bb38e049548e4}} 
+bool {\bfseries Corect\+Direction} (node\+Right)
+\item 
+\mbox{\Hypertarget{class_tree_node_a73b8e14f491d788e735295d025610667}\label{class_tree_node_a73b8e14f491d788e735295d025610667}} 
+node\+Direction {\bfseries Oposite\+Direction} ()
+\item 
+\mbox{\Hypertarget{class_tree_node_a61313a7643890bea2a174e9780dbeb03}\label{class_tree_node_a61313a7643890bea2a174e9780dbeb03}} 
+\mbox{\hyperlink{class_tree_node}{Tree\+Node}} $\ast$ {\bfseries Compare\+Node} (\mbox{\hyperlink{class_tree_node}{Tree\+Node}} $\ast$)
+\item 
+void \mbox{\hyperlink{class_tree_node_a29879df06afc58f5cc4b35dee8c49bbc}{del\+Children}} ()
+\item 
+void \mbox{\hyperlink{class_tree_node_a019d06e777854187cd05b475ada4e761}{propagate\+Prop}} ()
+\item 
+\mbox{\Hypertarget{class_tree_node_a3d6fc0a541620b286c0a5d70bb234ce6}\label{class_tree_node_a3d6fc0a541620b286c0a5d70bb234ce6}} 
+\mbox{\hyperlink{class_tree_node}{Tree\+Node}} $\ast$ {\bfseries Direction\+Child} (node\+Direction)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_tree_node_a030ace0b6ba257ed9aa8187ae3098214}\label{class_tree_node_a030ace0b6ba257ed9aa8187ae3098214}} 
+node\+Type {\bfseries type}
+\item 
+\mbox{\Hypertarget{class_tree_node_ade1bc3264c9c38ab1543edbc3ef21cff}\label{class_tree_node_ade1bc3264c9c38ab1543edbc3ef21cff}} 
+std\+::array$<$ \mbox{\hyperlink{class_tree_node}{Tree\+Node}} $\ast$, 4 $>$ {\bfseries children}
+\item 
+\mbox{\Hypertarget{class_tree_node_a79905d424b57c04be146e73ad48fbf36}\label{class_tree_node_a79905d424b57c04be146e73ad48fbf36}} 
+node\+Direction {\bfseries direction}
+\item 
+\mbox{\Hypertarget{class_tree_node_a216209750becccd18f574ab1a68f01ef}\label{class_tree_node_a216209750becccd18f574ab1a68f01ef}} 
+\mbox{\hyperlink{class_tree_node}{Tree\+Node}} $\ast$ {\bfseries parent}
+\item 
+\mbox{\Hypertarget{class_tree_node_a7b6650ce05d5f27cc90d1b5c07302999}\label{class_tree_node_a7b6650ce05d5f27cc90d1b5c07302999}} 
+data\+Type {\bfseries content}
+\item 
+\mbox{\Hypertarget{class_tree_node_a56d983fae5597637a7395da2932efaf5}\label{class_tree_node_a56d983fae5597637a7395da2932efaf5}} 
+cv\+::\+Point {\bfseries nw}
+\item 
+\mbox{\Hypertarget{class_tree_node_aa24af38f8113cd5f5b0fef6ac01f7e5d}\label{class_tree_node_aa24af38f8113cd5f5b0fef6ac01f7e5d}} 
+cv\+::\+Point {\bfseries se}
+\item 
+\mbox{\Hypertarget{class_tree_node_adce3854c4f7bc6801ea2d8fc31efacbb}\label{class_tree_node_adce3854c4f7bc6801ea2d8fc31efacbb}} 
+unsigned long long {\bfseries c\+Dif}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$typename data\+Type$>$\newline
+class Tree\+Node$<$ data\+Type $>$}
+
+Class used for representing nodes inside our quadtree structure 
+\begin{DoxyTemplParams}{Template Parameters}
+{\em data\+Type} & Can only be cv\+::\+Vec3b despide being a deplated function as it is split into a header and implementation. \\
+\hline
+\end{DoxyTemplParams}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_tree_node_a6d7506627b3241533a65676a82a49433}\label{class_tree_node_a6d7506627b3241533a65676a82a49433}} 
+\index{TreeNode$<$ dataType $>$@{TreeNode$<$ dataType $>$}!TreeNode@{TreeNode}}
+\index{TreeNode@{TreeNode}!TreeNode$<$ dataType $>$@{TreeNode$<$ dataType $>$}}
+\doxysubsubsection{\texorpdfstring{TreeNode()}{TreeNode()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$typename data\+Type $>$ \\
+\mbox{\hyperlink{class_tree_node}{Tree\+Node}}$<$ data\+Type $>$\+::\mbox{\hyperlink{class_tree_node}{Tree\+Node}} (\begin{DoxyParamCaption}\item[{node\+Type}]{type = {\ttfamily leaf},  }\item[{\mbox{\hyperlink{class_tree_node}{Tree\+Node}}$<$ data\+Type $>$ $\ast$}]{parent = {\ttfamily nullptr} }\end{DoxyParamCaption})}
+
+Intentionally declared as implicit constructor
+
+This is also the implicit constructor, watch out this creates leafs by default 
+\begin{DoxyTemplParams}{Template Parameters}
+{\em data\+Type} & can only be cv\+::\+Vec3b as of right now \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Parameters}
+{\em type} & set to leaf By default \\
+\hline
+{\em parent} & parent of node to be inserted \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_tree_node_a706c077d21559fbc35cd3054f46a0aeb}\label{class_tree_node_a706c077d21559fbc35cd3054f46a0aeb}} 
+\index{TreeNode$<$ dataType $>$@{TreeNode$<$ dataType $>$}!TreeNode@{TreeNode}}
+\index{TreeNode@{TreeNode}!TreeNode$<$ dataType $>$@{TreeNode$<$ dataType $>$}}
+\doxysubsubsection{\texorpdfstring{TreeNode()}{TreeNode()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$typename data\+Type $>$ \\
+\mbox{\hyperlink{class_tree_node}{Tree\+Node}}$<$ data\+Type $>$\+::\mbox{\hyperlink{class_tree_node}{Tree\+Node}} (\begin{DoxyParamCaption}\item[{data\+Type}]{content,  }\item[{cv\+::\+Point}]{upper\+Left = {\ttfamily \{0,~0\}},  }\item[{cv\+::\+Point}]{lower\+Right = {\ttfamily \{0,~0\}},  }\item[{node\+Type}]{type = {\ttfamily leaf},  }\item[{\mbox{\hyperlink{class_tree_node}{Tree\+Node}}$<$ data\+Type $>$ $\ast$}]{parent = {\ttfamily nullptr} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}}
+
+Also assigns a value to nw, se and content 
+\begin{DoxyTemplParams}{Template Parameters}
+{\em data\+Type} & can only be cv\+::\+Vec3b as of right now \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Parameters}
+{\em content} & \\
+\hline
+{\em upper\+Left} & Point representing upper left corner of the area this node represents \\
+\hline
+{\em lower\+Right} & Point representing upper left corner of the area this node represents \\
+\hline
+{\em type} & Either leaf, branch or root \\
+\hline
+{\em parent} & Pointer to previous node in Tree, should be null when type = root \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_tree_node_a0599f9040e51b396244b2665a4c05ffd}\label{class_tree_node_a0599f9040e51b396244b2665a4c05ffd}} 
+\index{TreeNode$<$ dataType $>$@{TreeNode$<$ dataType $>$}!````~TreeNode@{$\sim$TreeNode}}
+\index{````~TreeNode@{$\sim$TreeNode}!TreeNode$<$ dataType $>$@{TreeNode$<$ dataType $>$}}
+\doxysubsubsection{\texorpdfstring{$\sim$TreeNode()}{~TreeNode()}}
+{\footnotesize\ttfamily template$<$typename data\+Type $>$ \\
+\mbox{\hyperlink{class_tree_node}{Tree\+Node}}$<$ data\+Type $>$\+::$\sim$\mbox{\hyperlink{class_tree_node}{Tree\+Node}}}
+
+Simple deconstructor should hopefully work 
+\begin{DoxyTemplParams}{Template Parameters}
+{\em data\+Type} & \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Parameters}
+{\em content} & \\
+\hline
+{\em type} & \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_tree_node_a29879df06afc58f5cc4b35dee8c49bbc}\label{class_tree_node_a29879df06afc58f5cc4b35dee8c49bbc}} 
+\index{TreeNode$<$ dataType $>$@{TreeNode$<$ dataType $>$}!delChildren@{delChildren}}
+\index{delChildren@{delChildren}!TreeNode$<$ dataType $>$@{TreeNode$<$ dataType $>$}}
+\doxysubsubsection{\texorpdfstring{delChildren()}{delChildren()}}
+{\footnotesize\ttfamily template$<$typename data\+Type $>$ \\
+void \mbox{\hyperlink{class_tree_node}{Tree\+Node}}$<$ data\+Type $>$\+::del\+Children}
+
+Simple function used to safely remove child nodes also used in Generation 
+\begin{DoxyTemplParams}{Template Parameters}
+{\em data\+Type} & \\
+\hline
+\end{DoxyTemplParams}
+\mbox{\Hypertarget{class_tree_node_a019d06e777854187cd05b475ada4e761}\label{class_tree_node_a019d06e777854187cd05b475ada4e761}} 
+\index{TreeNode$<$ dataType $>$@{TreeNode$<$ dataType $>$}!propagateProp@{propagateProp}}
+\index{propagateProp@{propagateProp}!TreeNode$<$ dataType $>$@{TreeNode$<$ dataType $>$}}
+\doxysubsubsection{\texorpdfstring{propagateProp()}{propagateProp()}}
+{\footnotesize\ttfamily template$<$typename data\+Type $>$ \\
+void \mbox{\hyperlink{class_tree_node}{Tree\+Node}}$<$ data\+Type $>$\+::propagate\+Prop}
+
+Function that sets this nodes content equal to the average of it\textquotesingle{}s children and avarage colour difference (cdif) to the total of it\textquotesingle{}s children + the difference between the colours of it\textquotesingle{}s children and itself The purpose of c\+Dif is to enable a more \char`\"{}fuzzy match\char`\"{} match as that may be required when dealing with JPEG images 
+\begin{DoxyTemplParams}{Template Parameters}
+{\em data\+Type} & \\
+\hline
+\end{DoxyTemplParams}
+Propagate average
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Logic/Tree\+Node.\+h\item 
+Logic/Tree\+Node.\+cpp\end{DoxyCompactItemize}

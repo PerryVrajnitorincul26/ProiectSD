@@ -1,0 +1,103 @@
+\hypertarget{class_im_to_quad_tree}{}\doxysection{Im\+To\+Quad\+Tree$<$ data\+Type $>$ Class Template Reference}
+\label{class_im_to_quad_tree}\index{ImToQuadTree$<$ dataType $>$@{ImToQuadTree$<$ dataType $>$}}
+
+
+{\ttfamily \#include $<$Im\+To\+Quad\+Tree.\+h$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_im_to_quad_tree_a443a7ba44fbabb70b00dc49c067ce892}{show\+Dif\+Vect}} (std\+::vector$<$ std\+::pair$<$ cv\+::\+Point, cv\+::\+Point $>$$>$)
+\item 
+\mbox{\hyperlink{class_im_to_quad_tree_a874876c9a60d033c257b06d4fe3a12d7}{Im\+To\+Quad\+Tree}} (std\+::string filepath)
+\item 
+std\+::vector$<$ std\+::pair$<$ cv\+::\+Point, cv\+::\+Point $>$ $>$ \mbox{\hyperlink{class_im_to_quad_tree_a4c3ab967df0d36f0934f9dabc68dd40a}{get\+Diff}} (\mbox{\hyperlink{class_im_to_quad_tree}{Im\+To\+Quad\+Tree}}$<$ data\+Type $>$ $\ast$, unsigned long long threshold)
+\item 
+void \mbox{\hyperlink{class_im_to_quad_tree_a3f7bbe1bb095fc7738063774975e7a81}{sanity\+Check}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$typename data\+Type$>$\newline
+class Im\+To\+Quad\+Tree$<$ data\+Type $>$}
+
+DO NOT use \char`\"{}using namespace cv\char`\"{} please it\textquotesingle{}d be ideal if we kept use of OPENCV obvious
+
+Class that handles generating quad\+Trees from images , as of right now only passed as filepaths 
+\begin{DoxyTemplParams}{Template Parameters}
+{\em data\+Type} & Can only be cv\+::\+Vec3b if any other types are needed they must be declared somewhere that has access to \mbox{\hyperlink{class_im_to_quad_tree}{Im\+To\+Quad\+Tree}} before compilation \\
+\hline
+\end{DoxyTemplParams}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_im_to_quad_tree_a874876c9a60d033c257b06d4fe3a12d7}\label{class_im_to_quad_tree_a874876c9a60d033c257b06d4fe3a12d7}} 
+\index{ImToQuadTree$<$ dataType $>$@{ImToQuadTree$<$ dataType $>$}!ImToQuadTree@{ImToQuadTree}}
+\index{ImToQuadTree@{ImToQuadTree}!ImToQuadTree$<$ dataType $>$@{ImToQuadTree$<$ dataType $>$}}
+\doxysubsubsection{\texorpdfstring{ImToQuadTree()}{ImToQuadTree()}}
+{\footnotesize\ttfamily template$<$typename data\+Type $>$ \\
+\mbox{\hyperlink{class_im_to_quad_tree}{Im\+To\+Quad\+Tree}}$<$ data\+Type $>$\+::\mbox{\hyperlink{class_im_to_quad_tree}{Im\+To\+Quad\+Tree}} (\begin{DoxyParamCaption}\item[{std\+::string}]{filepath }\end{DoxyParamCaption})}
+
+Only constructor used within the actual program This calls generate with 0,0 and \{\$p,\$p\} arguments where \$p is ceil(log2(std\+::max(width,height))) of the image 
+\begin{DoxyTemplParams}{Template Parameters}
+{\em data\+Type} & \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Parameters}
+{\em filepath} & valid filepath in std\+::string format \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_im_to_quad_tree_a4c3ab967df0d36f0934f9dabc68dd40a}\label{class_im_to_quad_tree_a4c3ab967df0d36f0934f9dabc68dd40a}} 
+\index{ImToQuadTree$<$ dataType $>$@{ImToQuadTree$<$ dataType $>$}!getDiff@{getDiff}}
+\index{getDiff@{getDiff}!ImToQuadTree$<$ dataType $>$@{ImToQuadTree$<$ dataType $>$}}
+\doxysubsubsection{\texorpdfstring{getDiff()}{getDiff()}}
+{\footnotesize\ttfamily template$<$typename data\+Type $>$ \\
+std\+::vector$<$ std\+::pair$<$ cv\+::\+Point, cv\+::\+Point $>$ $>$ \mbox{\hyperlink{class_im_to_quad_tree}{Im\+To\+Quad\+Tree}}$<$ data\+Type $>$\+::get\+Diff (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_im_to_quad_tree}{Im\+To\+Quad\+Tree}}$<$ data\+Type $>$ $\ast$}]{T1,  }\item[{unsigned long long}]{threshold }\end{DoxyParamCaption})}
+
+The other do everything function in our program 
+\begin{DoxyParams}{Parameters}
+{\em T1} & pointer to Tree this is supposed to be compared to \\
+\hline
+{\em threshold} & value against which we check colour difference , can therefore be used , as the name would suggest, for more \char`\"{}fuzzy\char`\"{} comparison. Quite useful for JPG images. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Vector of \char`\"{}squares\char`\"{} which represent differences in the two trees Based on level order traversal, only deviates from this approach when one of the nodes has children 
+\end{DoxyReturn}
+\begin{DoxyWarning}{Warning}
+possible bug here if f1-\/type is root, i\textquotesingle{}m assuming no image would be a block of identical pixels however
+\end{DoxyWarning}
+\mbox{\Hypertarget{class_im_to_quad_tree_a3f7bbe1bb095fc7738063774975e7a81}\label{class_im_to_quad_tree_a3f7bbe1bb095fc7738063774975e7a81}} 
+\index{ImToQuadTree$<$ dataType $>$@{ImToQuadTree$<$ dataType $>$}!sanityCheck@{sanityCheck}}
+\index{sanityCheck@{sanityCheck}!ImToQuadTree$<$ dataType $>$@{ImToQuadTree$<$ dataType $>$}}
+\doxysubsubsection{\texorpdfstring{sanityCheck()}{sanityCheck()}}
+{\footnotesize\ttfamily template$<$typename data\+Type $>$ \\
+void \mbox{\hyperlink{class_im_to_quad_tree}{Im\+To\+Quad\+Tree}}$<$ data\+Type $>$\+::sanity\+Check}
+
+Very usefull function to make sure you are in fat not going insane Does nothing beyond print something that won\textquotesingle{}t even show up in stderr unless you\textquotesingle{}ve enabled it in some arcane config file \mbox{\Hypertarget{class_im_to_quad_tree_a443a7ba44fbabb70b00dc49c067ce892}\label{class_im_to_quad_tree_a443a7ba44fbabb70b00dc49c067ce892}} 
+\index{ImToQuadTree$<$ dataType $>$@{ImToQuadTree$<$ dataType $>$}!showDifVect@{showDifVect}}
+\index{showDifVect@{showDifVect}!ImToQuadTree$<$ dataType $>$@{ImToQuadTree$<$ dataType $>$}}
+\doxysubsubsection{\texorpdfstring{showDifVect()}{showDifVect()}}
+{\footnotesize\ttfamily template$<$typename data\+Type $>$ \\
+void \mbox{\hyperlink{class_im_to_quad_tree}{Im\+To\+Quad\+Tree}}$<$ data\+Type $>$\+::show\+Dif\+Vect (\begin{DoxyParamCaption}\item[{std\+::vector$<$ std\+::pair$<$ cv\+::\+Point, cv\+::\+Point $>$$>$}]{vect }\end{DoxyParamCaption})}
+
+Simple function ment to open a CV window containing line rectangles overlaid over one of the source images. 
+\begin{DoxyTemplParams}{Template Parameters}
+{\em data\+Type} & \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Parameters}
+{\em vect} & vector of \char`\"{}squares\char`\"{} Honestly I could\textquotesingle{}ve used a single point here instead of a pair. \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Logic/Im\+To\+Quad\+Tree.\+h\item 
+Logic/Im\+To\+Quad\+Tree.\+cpp\end{DoxyCompactItemize}
