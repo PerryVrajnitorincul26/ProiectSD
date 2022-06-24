@@ -17,6 +17,7 @@ find_package(OpenCV REQUIRED)
 
 set(PROJECT_SOURCES
         main.cpp
+        interface.h interface.cpp
         UI/mainwindow.cpp UI/mainwindow.h UI/mainwindow.ui
         Logic/ImToQuadTree.cpp Logic/ImToQuadTree.h
         Logic/TreeNode.cpp Logic/TreeNode.h)

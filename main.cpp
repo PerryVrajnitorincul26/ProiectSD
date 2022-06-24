@@ -15,7 +15,7 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     MainWindow w;
-    std::string image_path = samples::findFile("ycheck.bmp");
+    //std::string image_path = samples::findFile("ycheck.bmp");
     //Mat img = imread(image_path, IMREAD_COLOR);
     //QString str;
     //Mat hslImage;
@@ -28,9 +28,9 @@ int main(int argc, char *argv[])
     //    return 1;
     //}
     //imshow("salut",img);
-    auto *temp1 = new ImToQuadTree<Vec3b>("ycheck.bmp");
-    auto *temp2 = new ImToQuadTree<Vec3b>("check.bmp");
-    auto rez = temp1->getDiff(temp2,0);
+    //auto *temp1 = new ImToQuadTree<Vec3b>("ycheck.bmp");
+    //auto *temp2 = new ImToQuadTree<Vec3b>("check.bmp");
+    //auto rez = temp1->getDiff(temp2,0);
     w.show();
     return a.exec();
 }

@@ -73,7 +73,7 @@
              </property>
             </widget>
            </item>
-           <item row="3" column="0">
+           <item row="4" column="0">
             <widget class="QListView" name="listView">
              <property name="sizePolicy">
               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
@@ -99,6 +99,13 @@
             <widget class="QPushButton" name="removeSelected">
              <property name="text">
               <string>Remove Selected</string>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="0">
+            <widget class="QPushButton" name="createComparison">
+             <property name="text">
+              <string>Compare Selected</string>
              </property>
             </widget>
            </item>

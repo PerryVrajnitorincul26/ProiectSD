@@ -15,7 +15,6 @@ ImToQuadTree<dataType>::ImToQuadTree() {
 
 template<typename dataType>
 ImToQuadTree<dataType>::ImToQuadTree(cv::Mat Img):ImToQuadTree() {
-    //maxHeight = intlog(4, Img.total());
     iMat = Img;
 };
 
@@ -23,7 +22,7 @@ template<typename dataType>
 ImToQuadTree<dataType>::ImToQuadTree(std::string filepath):ImToQuadTree() {
     iMat = cv::imread(filepath, cv::IMREAD_COLOR);
     auto mSize = std::max(iMat.rows, iMat.cols);
-    maxHeight = ceil(log(mSize));
+    maxHeight = ceil(log2(mSize));
     //Required to use nodeType::root because I didn't realise I was shadowing its value when I created this class :)
     root = new TreeNode<cv::Vec3b>(nodeType::root, nullptr);
     int size = 1 << maxHeight; // equivalent to 2^maxHeight
@@ -37,31 +36,32 @@ void ImToQuadTree<dataType>::generate(cv::Point nw, cv::Point se, TreeNode<dataT
     cv::Point A1{0, 0};
     int diff = (se.x - nw.x + 1) / 2;
     if (diff >= 1) {
-
+        cNode->nw=nw;
+        cNode->se=se;
         for (auto &i: cNode->children) {
             i = new TreeNode<dataType>({0, 0, 0}, nw, se, branch, cNode);
         }
         A1 = nw;
-        A2.x = se.x - diff;
         A2.y = se.y - diff;
+        A2.x = se.x - diff;
         generate(A1, A2, cNode->children[0]);
 
-        A1.x = nw.x + diff;
-        A1.y = nw.y;
-        A2.x = se.x;
-        A2.y = se.y - diff;
+        A1.y = nw.y + diff;
+        A1.x = nw.x;
+        A2.y = se.y;
+        A2.x = se.x - diff;
         generate(A1, A2, cNode->children[1]);
 
 
-        A1.x = nw.x + diff;
         A1.y = nw.y + diff;
+        A1.x = nw.x + diff;
         A2 = se;
         generate(A1, A2, cNode->children[2]);
 
-        A1.x = nw.x;
-        A1.y = nw.y + diff;
-        A2.x = se.x - diff;
-        A2.y = se.y;
+        A1.y = nw.y;
+        A1.x = nw.x + diff;
+        A2.y = se.y - diff;
+        A2.x = se.x;
         generate(A1, A2, cNode->children[3]);
 
         bool idLeaf = true;
@@ -87,14 +87,14 @@ void ImToQuadTree<dataType>::generate(cv::Point nw, cv::Point se, TreeNode<dataT
 
     } else {
         cNode->type = leaf;
-        if (nw.x < iMat.rows && nw.y < iMat.cols)
-            cNode->content = iMat.at<cv::Vec3b>(nw.x, nw.y);
+        if (nw.y < iMat.rows && nw.x < iMat.cols)
+            cNode->content = iMat.at<cv::Vec3b>(nw.y, nw.x);
         else
             cNode->content = cv::Vec3b(0, 0, 0);
     }
     if (cNode->cDif)
-        qDebug() << "At:" << nw.y << "|" << nw.x << " " << se.y << "|" << se.x << "  "
-                 << cNode->content[0] << cNode->content[1] << cNode->content[2] << (se.x - nw.x + 1);
+        qDebug() << "At:" << nw.x << "|" << nw.y << " " << se.x << "|" << se.y << "  "
+                 << cNode->content[0] << cNode->content[1] << cNode->content[2] << (se.y - nw.y + 1);
 }
 
 
@@ -143,8 +143,8 @@ ImToQuadTree<dataType>::getDiff(ImToQuadTree<dataType> *T1, unsigned long long t
                         difValues.push_back({unEq.front()->nw, unEq.front()->se});
                     }
                     unEq.pop();
-                    ///Undefined behaviour when unEq is empty, however relDif WILL be overwritten by the time it is used again
-                    auto relDif = f1->colorDistance(unEq.front());
+                    if (!unEq.empty())
+                        auto relDif = f1->colorDistance(unEq.front());
                 }
             } else { //f2->type == leaf
                 std::queue<TreeNode<dataType> *> unEq;
@@ -159,7 +159,8 @@ ImToQuadTree<dataType>::getDiff(ImToQuadTree<dataType> *T1, unsigned long long t
                     }
                     unEq.pop();
                     ///Undefined behaviour when unEq is empty, however relDif WILL be overwritten by the time it is used again
-                    auto relDif = f2->colorDistance(unEq.front());
+                    if (!unEq.empty())
+                        auto relDif = f2->colorDistance(unEq.front());
                 }
             }
         }
@@ -174,6 +175,16 @@ ImToQuadTree<dataType>::getDiff(ImToQuadTree<dataType> *T1, unsigned long long t
 template<typename dataType>
 void ImToQuadTree<dataType>::sanityCheck() {
     qDebug() << "sanity restored";
+}
+
+template<typename dataType>
+void ImToQuadTree<dataType>::showDifVect(std::vector<std::pair<cv::Point, cv::Point>> vect) {
+    cv::Mat temp(iMat);
+    for(const auto &coords : vect)
+    {
+        cv::rectangle(temp,coords.second,coords.first,{255,0,0});
+    }
+    cv::imshow(":)",temp);
 };
 
 //Instantiation is required otherwise linker will not be able to access it.

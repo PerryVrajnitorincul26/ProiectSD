@@ -21,7 +21,7 @@ class ImToQuadTree {
     void generate(cv::Point nw, cv::Point se, TreeNode<dataType> *cNode);
 
 public:
-
+    void showDifVect(std::vector<std::pair<cv::Point, cv::Point>>);
     ImToQuadTree();
 
     ImToQuadTree(cv::Mat);

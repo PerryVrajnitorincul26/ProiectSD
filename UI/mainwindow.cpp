@@ -2,14 +2,19 @@
 #include "./ui_mainwindow.h"
 #include <QDebug>
 #include <QAbstractItemView>
+
 MainWindow::MainWindow(QWidget *parent)
-        : QMainWindow(parent), ui(new Ui::MainWindow){
+        : QMainWindow(parent), ui(new Ui::MainWindow) {
+
+    difKeyList = new QStringList();
     ui->setupUi(this);
     filepaths = new QStringListModel(actualList);
+    difKeyModel = new QStringListModel(*difKeyList);
     ui->listView->setModel(filepaths);
     ui->listView->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    ui->listView->setSelectionMode(QAbstractItemView::MultiSelection);
 
-    ui->compareView->setModel(filepaths);
+    ui->compareView->setModel(difKeyModel);
     ui->compareView->setEditTriggers(QAbstractItemView::NoEditTriggers);
     ui->compareView->setSelectionMode(QAbstractItemView::MultiSelection);
 
@@ -25,16 +30,15 @@ MainWindow::MainWindow(QWidget *parent)
     ui->comparePane->setWidget(compareLabel);
     ui->imagePane->setWidget(previewLabel);
 
-    toCompare = new QStringList();
+    difKeyList = new QStringList();
+    lastSelection = new QStringList();
 }
 
 MainWindow::~MainWindow() {
     delete ui;
 }
 
-void MainWindow::setImage(QString newimg)
-{
-
+void MainWindow::setImage(QString newimg) {
     delete internalImage;
     internalImage = new QImage(newimg);
     previewLabel->setPixmap(QPixmap::fromImage(*internalImage));
@@ -44,39 +48,86 @@ void MainWindow::setImage(QString newimg)
 
 void MainWindow::on_LoadSingleImage_clicked() {
     auto fileName = QFileDialog::getOpenFileNames(this, tr("Load Single Image"), tr("Image Files (*.png *.jpg *.bmp)"));
-    actualList<<fileName;
+    actualList << fileName;
     filepaths->setStringList(actualList);
+    for (const auto &i: fileName) {
+        knownImages.insert(i, new ImToQuadTree<cv::Vec3b>(i.toStdString()));
+    }
+    setImage(fileName[0]);
 }
 
 
 void MainWindow::on_SaveSelectedFiles_clicked() {
-    qDebug()<< filepaths->rowCount();
+    qDebug() << filepaths->rowCount();
+}
+
+void MainWindow::on_listView_clicked(const QModelIndex &index) {
+    this->setImage(index.data().toString());
+    if (lastSelection->contains(index.data().toString())) {
+        lastSelection->removeOne(index.data().toString());
+    } else
+        *lastSelection << index.data().toString();
 }
 
 
-void MainWindow::on_listView_clicked(const QModelIndex &index)
-{
+void MainWindow::on_compareView_clicked(const QModelIndex &index) {
     this->setImage(index.data().toString());
-    lastSelection=index;
+    if (difKeyList->contains(index.data().toString())) {
+        difKeyList->removeOne(index.data().toString());
+    } else
+        *difKeyList << index.data().toString();
+    qDebug() << *difKeyList;
 }
 
 
-void MainWindow::on_compareView_clicked(const QModelIndex &index)
-{
-    this->setImage(index.data().toString());
-    if(toCompare->contains(index.data().toString()))
+void MainWindow::on_removeSelected_clicked() {
+    for(auto name : *lastSelection)
     {
-        toCompare->removeOne(index.data().toString());
+    delete knownImages[name];
+    knownImages.remove(name);
+    filepaths->removeRow(filepaths->stringList().indexOf(name));
     }
-    else
-        *toCompare<<index.data().toString();
-    qDebug()<<*toCompare;
-
 }
 
 
-void MainWindow::on_removeSelected_clicked()
+void MainWindow::on_compareSelection_clicked() {
+    for(int i=0;i<lastSelection->size();i++)
+    {
+        for(int j=i;j<lastSelection->size();j++)
+        {
+            auto hash = (*lastSelection)[i] + (*lastSelection)[j];
+            auto first = knownImages[(*lastSelection)[i]];
+            auto second = knownImages[(*lastSelection)[j]];
+            knownDiffs.insert(hash,first->getDiff(second,0));
+        }
+    }
+    *difKeyList = knownDiffs.keys();
+    qDebug()<<knownDiffs.keys();
+
+    qDebug()<<"i am not insane";
+    difKeyModel->setStringList(*difKeyList);
+}
+
+
+void MainWindow::on_createComparison_clicked()
 {
-    filepaths->removeRow(lastSelection.row());
+    for(int i=0;i<lastSelection->size()-1;i++)
+    {
+        for(int j=i;j<lastSelection->size();j++)
+        {
+            auto hash = (*lastSelection)[i] +"|" + (*lastSelection)[j];
+            auto first = knownImages[(*lastSelection)[i]];
+            auto second = knownImages[(*lastSelection)[j]];
+            auto t=first->getDiff(second,0);
+            knownDiffs.insert(hash,first->getDiff(second,0));
+            auto temp= knownDiffs[hash];
+            first->showDifVect(temp);
+        }
+    }
+    *difKeyList = knownDiffs.keys();
+    qDebug()<<knownDiffs.keys();
+
+    qDebug()<<"i am not insane";
+    difKeyModel->setStringList(*difKeyList);
 }
 
